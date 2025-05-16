@@ -1,0 +1,141 @@
+/* Global elegant dark theme with gradient and refined UI */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+:root {
+  --bg-gradient-start: #0f2027;
+  --bg-gradient-end: #2c5364;
+  --card-bg: #1c1c1e;
+  --input-bg: #2a2a2d;
+  --text-color: #f3f4f6;
+  --muted-text-color: #a0aec0;
+  --accent-color: #ff8c42; /* Orange Accent */
+  --accent-hover: #ffa75d;
+  --border-radius: 0.75rem;
+  --font-family: 'Inter', sans-serif;
+  --shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: linear-gradient(to right, var(--bg-gradient-start), var(--bg-gradient-end));
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  padding: 3rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1, h2, h3 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+label {
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--muted-text-color);
+}
+
+input,
+select,
+textarea {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  padding: 1rem;
+  border: 1px solid #4b5563;
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 6px var(--accent-color);
+}
+
+button {
+  background-color: var(--accent-color);
+  color: #1a1a1a;
+  font-weight: 600;
+  border: none;
+  margin:1rem 0;
+  padding: 0.75rem 0.5rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: var(--accent-hover);
+}
+
+.alert {
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+.alert-success {
+  background-color: #38b2ac;
+  color: white;
+}
+.alert-error {
+  background-color: #f56565;
+  color: white;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem;
+  }
+
+  h1, h2 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
