@@ -4,11 +4,13 @@
 <h2>Welcome, {{ user.first_name }} (Patient)</h2>
 <p>Email: {{ user.email }}</p>
 <p>Address: {{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}</p>
-{% if user.profile_picture %}
-    <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
-{% else %}
-    <p>No profile picture uploaded.</p>
-{% endif %}
+<div class="image-container">
+        {% if user.profile_picture %}
+            <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
+        {% else %}
+            <p>No profile picture uploaded.</p>
+        {% endif %}
+</div>
 <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}
     <button type="submit">Logout</button>
