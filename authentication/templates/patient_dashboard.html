@@ -1,19 +1,61 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.user_type == 'patient' %}
 <h2>Welcome, {{ user.first_name }} (Patient)</h2>
 <p>Email: {{ user.email }}</p>
 <p>Address: {{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}</p>
+
 <div class="image-container">
-        {% if user.profile_picture %}
-            <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
-        {% else %}
-            <p>No profile picture uploaded.</p>
-        {% endif %}
+    {% if user.profile_picture %}
+        <img src="{{ user.profile_picture.url }}" alt="Profile Picture" style="max-width: 200px; height: auto;">
+    {% else %}
+        <p>No profile picture uploaded.</p>
+    {% endif %}
 </div>
-<form method="post" action="{% url 'logout' %}">
+
+<!-- Blog Posts Section -->
+<div class="blog-posts">
+    <h3>Published Blog Posts</h3>
+
+    {% if category_posts %}
+        {% for category, category_posts_list in category_posts.items %}
+            <h2>{{ category }}</h2>
+            <ul>
+                {% for post in category_posts_list %}
+                    <li style="margin-bottom: 20px;">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="Blog Image" style="max-width: 150px; height: auto;">
+                        {% endif %}
+                        <h4>{{ post.title }}</h4>
+                        <p><strong>Category:</strong> {{ post.category }}</p>
+                        <p>
+                            <span id="summary-{{ post.id }}">
+                                {{ post.summary|truncatewords:15 }}
+                                {% if post.summary|length > 15 %}
+                                    
+                                <button type="button" onclick="document.getElementById('full-{{ post.id }}').style.display='inline'; this.style.display='none';">Read more</button>
+                                {% endif %}
+                            </span>
+                            <span id="full-{{ post.id }}" style="display: none;"> {{ post.summary|safe }}</span>
+                        </p>
+                        <p><em>By {{ post.doctor.first_name }} on {{ post.created_at|date:"F j, Y" }}</em></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>No published blog posts available.</p>
+    {% endif %}
+</div>
+
+<form method="post" action="{% url 'authentication:logout' %}" style="margin-top: 40px;">
     {% csrf_token %}
     <button type="submit">Logout</button>
 </form>
+
+{% else %}
+<p>You do not have access to this page.</p>
 {% endif %}
 {% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'base1.html' %}
+
+{% load static %}
+
+{% block content %}
+<h3>Your Blog Posts</h3>
+
+<ul>
+    {% for post in posts %}
+        <li>
+            <strong>{{ post.title }}</strong>
+            {% if post.draft %}
+                <em>(Draft)</em>
+            {% endif %}
+            <br>
+            <a href="{% url 'blog:edit_blog_post' post.id %}">Edit</a> |
+            <a href="{% url 'blog:toggle_draft' post.id %}">
+                {% if post.is_draft %}Publish{% else %}Unpublish{% endif %}
+            </a> |
+            <a href="{% url 'blog:delete_blog' post.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+        </li>
+    {% empty %}
+        <li>No posts yet.</li>
+    {% endfor %}
+</ul>
+{% endblock content %}

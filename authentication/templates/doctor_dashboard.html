@@ -1,21 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.user_type == 'doctor' %}
 <div>
     <h2>Welcome, {{ user.first_name }} (Doctor)</h2>
     <p>Email: {{ user.email }}</p>
     <p>Address: {{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}</p>
     <div class="image-container">
         {% if user.profile_picture %}
-            <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
+            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" style="max-width: 200px; height: auto;">
         {% else %}
             <p>No profile picture uploaded.</p>
         {% endif %}
     </div>
 </div>
-<form method="post" action="{% url 'logout' %}">
+
+<!-- Blog management section -->
+<div class="blog-management" style="margin-top: 30px;">
+    <h3>Manage Blog Posts</h3>
+    <a href="{% url 'blog:create_blog' %}" class="btn btn-primary" style="display: inline-block; margin-bottom: 10px;">Create New Blog Post</a>
+    <br>
+    <a href="{% url 'blog:blog_post_list' %}" class="btn btn-secondary">View Your Blog Posts</a>
+</div>
+
+<form method="post" action="{% url 'authentication:logout' %}" style="margin-top: 40px;">
     {% csrf_token %}
     <button type="submit">Logout</button>
 </form>
+{% else %}
+<p>You do not have access to this page.</p>
 {% endif %}
 {% endblock content %}
